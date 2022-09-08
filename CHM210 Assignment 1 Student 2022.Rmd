@@ -1,0 +1,100 @@
+---
+title: "CHM210 Assignment 1"
+author: "Matthew G Davis"
+date: "2022-06-23"
+output:
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+This is assignment 1, written in R Markdown. R Markdown is a formatting syntax that allows for easily combining R code with text in a word, html, or pdf document. R is a programming language commonly used for scientific computing for data analysis and visualization.The University of Toronto chemistry department has prepared an R textbook that you may find useful if you get stuck or confused, available here: https://uoftchem-teaching.github.io/R4EnvChem/.
+
+In this assignment, we will be using R to import ozone, temperature, and pressure profiles with altitude, and do some data visualization and analysis.
+
+Typically, the simplest method of importing data into R is by importing from a csv or other similarly formatted file. The function for doing so is the read.csv() function, as shown in the code block below.
+
+```{r}
+data <- read.csv("Assignment 1 Ozone.csv", sep = ",")
+```
+
+Once your data is imported, you can manipulate it either with the GUI, or using simple commands in R. For example:
+
+```{r}
+print(data[1,])
+
+max(data$Temperature)
+
+min(data$Pressure..Pa.)
+```
+
+Note the `$` operator in the code block above. The syntax is `Print()`, `max()`, `min()` are functions, which are being applied to the object "data", and `$` is being used to designate that the operation should be done to the column named `Temperature` or `Pressure..Pa`.
+
+The first objective of this assignment is to explore some simple data visualization using the default R functions. 
+
+```{r}
+plot(data$Temperature~data$Altitude..km., type = "l", col = "red", xlab = "Altitude (km)", ylab = "Temperature (C)", main = "Temperature Profile of Earth's Atmosphere")
+```
+
+Some parameters that you may find of interest in this function call are the `~` operator, which is used to indicate a regression, with y values on the left, and x on the right, the columns which are plotted against each other are called explicitly using the `$` operator (there are other methods, but I find this is simpler), "type" allows you to select (among other options) line plots ("l") and scatterplots ("p"). "col" allows you to adjust the colour of your graphical parameters, R can interpret common colour names in writing, but hexcodes can be used to select a specific colour. `xlab`, `ylab`, and `main` give the axis labels and title respectively.
+
+Q1. You may notice that the function called above doesn't format the figure using the conventional approach in atmospheric chemistry, i.e. with altitude on the y-axis. How should you adjust the function call to correct this?
+
+```{r}
+##Plot a temperature profile of earth's atmosphere with altitude as the y-axis
+##Don't forget to change the axis labels as well...
+
+```
+
+
+Q2. Plot equivalent altitude profiles for Pressure and Ozone Mixing ratio.
+
+```{r}
+##Plot properly formatted figures for the pressure and ozone altitude profiles, including properly labelled axes and a title
+##Try changing the colours used in your figures as well
+```
+
+You may notice that your figures don't look quite the way you might like. For instance, plotting your pressure vs altitude normally will result in an exponentially decreasing curve from the top left (50 km/100s Pa) to the bottom right (0 km/100,000 Pa), which is not incorrect, but you may prefer to reverse the x-axis so that ground-level pressure is found at the origin. Try re-plotting that figure adding `xlim = rev(range(data$YOURVARIABLENAME))` to the function call.
+
+For the Ozone plot, small changes in Ozone concentration may not be visible with a linear axis. Try re-plotting that figure adding `log = "x"` to the function call.
+
+```{r}
+##Plot your updated figures in this code block
+
+```
+
+Q3. You may observe from your ozone figure that the peak ozone mixing ratio is at approximately 35 km. In terms of number density (molecules per cubic meter), at what altitude is the peak ozone concentration? 
+a) Calculate the ozone number density, and plot an altitude profile of it below. 
+b) In text (outside the code block), report the approximate altitude at which the peak number density of ozone is found, and briefly explain why the mixing ratio and number density peak at different altitudes.
+
+```{r}
+##plot an ozone number density profile with increasing altitude. 
+
+##Note that data$variable <- [values] can be used to create a new column in your dataframe labeled "variable", with the values given by [values].
+##You may find it useful to create two columns, data$number.density.air, and data$number.density.ozone
+
+
+```
+
+
+
+Q4. Report the column ozone (molecules/m2) from this dataset, as well as the Dobson units that column corresponds to. For your solution, you should assign the column ozone to a variable called, "Dobson", additionally you should either print the value to the console, or write it outside the codeblock.
+
+```{r}
+##You may report your figures either by writing outside the code block, or by printing the values to the console.
+##Note in your integration of the column ozone that the altitudes given are in kilometers, while you need to calculate the column in terms of meters.
+
+```
+
+
+
+Another useful thing you can do in R is--after having worked on a dataset and modified it--writing the modified data file to file so that you can keep it for later. A simple method for this is shown below.
+
+```{r}
+write.csv(data, "MyModifiedData.csv")
+```
+
+After completing your work in this assignment, click the knit button in the RStudio GUI to export your work as a pdf document.You will submit both the .pdf and the .rmd file you used to complete this assignment.
